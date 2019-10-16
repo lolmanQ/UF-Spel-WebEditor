@@ -1,2 +1,2 @@
-# UF-SPEL-WebEditor
+# UF-Spel-WebEditor
  

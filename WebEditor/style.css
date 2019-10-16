@@ -1,0 +1,38 @@
+/* här skrivs style detta är css */
+header{grid-area: header;}
+main{grid-area: main;}
+footer{grid-area: footer;}
+
+body{
+    background-color:rgb(194, 209, 255);
+}
+
+.Grid-Container{
+    display:  grid;
+    grid-template-areas:
+    'header header header header'
+    'main main main main'
+    'footer footer footer';
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+table{
+	width: 100%;
+	border-collapse: collapse;
+	background-color: rgb(233, 233, 233);
+}
+
+#addButton{
+    width: 100px;
+    height: 40px;
+    float: right;
+}

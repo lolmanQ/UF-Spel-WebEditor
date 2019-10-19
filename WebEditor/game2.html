@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="sv">
+	<head>
+		<!--här är head-->
+		<meta charset="utf-8">
+    	<title>Web-editor game 2</title>
+		<link href="style.css" rel="stylesheet">
+		<script type="text/javascript" src="mainGame2.js"></script>
+	</head>
+	<body>
+		<!--här är body-->
+		<div class="grid-container">
+			<header>
+				<h1>Question maker for Game 2</h1>
+			</header>
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="game1.html">Game-1</a></li>
+					<li><a class="active">Game-2</a></li>
+				</ul>
+			</nav>
+			<main>
+				<section>
+					<input type="file" id="idFile" onchange="readFile(getFile())">
+					<input type="text" id="fileNameID" placeholder="Filename">
+					<button onclick="downloadFile()">Download</button>
+					<button onclick="loadSave()" class="buttonFloat">Load</button>
+					<button onclick="saveSave()" class="buttonFloat">Save</button>
+					<button onclick="makeEmpty()" class="buttonFloat">Reset</button>
+					<table id="t01">
+						<thead>
+							<tr>
+								<th>Question</th>
+								<th>Answer</th>
+								<th>Fake-1</th>
+								<th>Fake-2</th>
+								<th>Fake-3</th>
+								<th>Image(optinal)</th>
+								<th>Remove Button</th>
+							</tr>
+						</thead>
+						<tbody id="tb01">
+
+						</tbody>
+					</table>
+					<button id="addButton" onclick="createEmptyRow()">Add new Question</button>
+				</section>
+			</main>
+			<footer>
+
+			</footer>
+		</div>
+	</body>
+</html>

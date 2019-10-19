@@ -22,11 +22,46 @@ function readFile(file){
 }
 
 function loadProject(){
+	emptyTheTabel();
     fullObjectStored = JSON.parse(file_text);
     stor = fullObjectStored.Items;
     fileNameString = fileNameFull.replace(".json", "");
     document.getElementById("fileNameID").value = fileNameString;
     makeTabell();
+}
+
+function loadSave(){
+	emptyTheTabel();
+	stor = JSON.parse(localStorage.getItem("myobjG2"));
+	document.getElementById("fileNameID").value = localStorage.getItem("fileNameG2");
+	makeTabell();
+}
+
+function saveSave(){
+	localStorage.setItem("myobjG2", JSON.stringify(stor));
+	localStorage.setItem("fileNameG2", fileNameString);
+}
+
+function makeEmpty(){
+	emptyTheTabel();
+	this.emptyValue = {
+        question: "",
+		answer: "",
+		fake1: "",
+		fake2: "",
+		fake3: "",
+        imageName: ""
+	};
+	document.getElementById("fileNameID").value = "default";
+	stor = [this.emptyValue];
+	makeTabell();
+}
+
+function emptyTheTabel(){
+	this.table =  document.getElementById("tb01");
+	while(this.table.hasChildNodes()){
+		this.table.removeChild(this.table.childNodes[0]);
+	}
 }
 
 function makeTabell(){
@@ -36,31 +71,49 @@ function makeTabell(){
 
 function makeRow(value, i){
     this.elementID = "I" + rowID;
-    this.table = document.getElementById("t01");
+    this.table = document.getElementById("tb01");
     this.rowElement = document.createElement("tr");
     this.rowElement.id = this.elementID;
-    for(columsIndex = 1; columsIndex <= 4; columsIndex++){
+    for(columsIndex = 1; columsIndex <= 7; columsIndex++){
         this.colomElement = document.createElement("td");
         switch(columsIndex){
             case 1:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "text";
-                this.colomInputElement.value = value.quQuizText;
+                this.colomInputElement.value = value.question;
                 this.colomInputElement.setAttribute("onchange", "updateQuestion("+i+", "+this.elementID+");");
                 break;
             case 2:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "text";
-                this.colomInputElement.value = value.anQuizText;
+                this.colomInputElement.value = value.answer;
                 this.colomInputElement.setAttribute("onchange", "updateAnswer("+i+", "+this.elementID+");");
                 break;
             case 3:
+				this.colomInputElement = document.createElement("input");
+				this.colomInputElement.type = "text";
+				this.colomInputElement.value = value.fake1;
+				this.colomInputElement.setAttribute("onchange", "updateFake1("+i+", "+this.elementID+");");
+				break;
+			case 4:
+				this.colomInputElement = document.createElement("input");
+				this.colomInputElement.type = "text";
+				this.colomInputElement.value = value.fake2;
+				this.colomInputElement.setAttribute("onchange", "updateFake2("+i+", "+this.elementID+");");
+				break;
+			case 5:
+				this.colomInputElement = document.createElement("input");
+				this.colomInputElement.type = "text";
+				this.colomInputElement.value = value.fake3;
+				this.colomInputElement.setAttribute("onchange", "updateFake3("+i+", "+this.elementID+");");
+				break;
+			case 6:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "text";
                 this.colomInputElement.value = value.imageName;
                 this.colomInputElement.setAttribute("onchange", "updateImage("+i+", "+this.elementID+");");
                 break;
-            case 4:
+            case 7:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "button";
                 this.colomInputElement.value = "Remove";
@@ -76,19 +129,31 @@ function makeRow(value, i){
 
 function updateQuestion(storageNumb, inputID){
     this.inputValue = inputID.children[0].firstElementChild.value;
-    console.log(this.inputValue);
-    stor[storageNumb].quQuizText = this.inputValue;
+    stor[storageNumb].question = this.inputValue;
 }
 
 function updateAnswer(storageNumb, inputID){
     this.inputValue = inputID.children[1].firstElementChild.value;
-    console.log(this.inputValue);
-    stor[storageNumb].anQuizText = this.inputValue;
+    stor[storageNumb].answer = this.inputValue;
+}
+
+function updateFake1(storageNumb, inputID){
+	this.inputValue = inputID.children[2].firstElementChild.value;
+    stor[storageNumb].fake1 = this.inputValue;
+}
+
+function updateFake2(storageNumb, inputID){
+	this.inputValue = inputID.children[3].firstElementChild.value;
+    stor[storageNumb].fake2 = this.inputValue;
+}
+
+function updateFake3(storageNumb, inputID){
+	this.inputValue = inputID.children[4].firstElementChild.value;
+    stor[storageNumb].fake3 = this.inputValue;
 }
 
 function updateImage(storageNumb, inputID){
     this.inputValue = inputID.children[2].firstElementChild.value;
-    console.log(this.inputValue);
     stor[storageNumb].imageName = this.inputValue;
 }
 
@@ -99,16 +164,31 @@ function removeButtonClick(storageNumb, inputID){
 
 function createEmptyRow(){
     this.emptyValue = {
-        quQuizText: "",
-        anQuizText: "",
+        question: "",
+		answer: "",
+		fake1: "",
+		fake2: "",
+		fake3: "",
         imageName: ""
     };
-    stor.push(this.emptyValue);
+    if(stor == null){
+		stor = [this.emptyValue];
+	}
+	else{
+		stor.push(this.emptyValue);
+	}
     makeRow(this.emptyValue, stor.length - 1);
 }
 
 function downloadFile(){
-    fullObjectStored.Items = stor;
+    if(fullObjectStored == null){
+		fullObjectStored = {
+			Items: stor
+		};
+	}
+	else{
+		fullObjectStored.Items = stor;
+	}
     this.jsString = JSON.stringify(fullObjectStored);
     fileNameString = document.getElementById("fileNameID").value;
     downloadObjectAsJson(fullObjectStored, fileNameString);

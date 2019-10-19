@@ -5,29 +5,22 @@
 		<meta charset="utf-8">
     	<title>Web-editor</title>
 		<link href="style.css" rel="stylesheet">
-		<script type="text/javascript" src="main.js"></script>
 	</head>
 	<body>
 		<!--här är body-->
 		<div class="grid-container">
 			<header>
-
+				<h1>Web-editor</h1>
 			</header>
+			<nav>
+				<ul>
+					<li><a class="active">Home</a></li>
+					<li><a href="game1.html">Game-1</a></li>
+					<li><a href="game2.html">Game-2</a></li>
+				</ul>
+			</nav>
 			<main>
-				<section>
-					<input type="file" id="idFile" onchange="readFile(getFile())">
-					<input type="text" id="fileNameID" placeholder="Filename">
-					<button onclick="downloadFile()">Download</button>
-					<table id="t01">
-						<tr>
-							<th>Question</th>
-							<th>Answer</th>
-							<th>Image(optinal)</th>
-							<th>Remove Button</th>
-						</tr>
-					</table>
-					<button id="addButton" onclick="createEmptyRow()">Add new Question</button>
-				</section>
+
 			</main>
 			<footer>
 

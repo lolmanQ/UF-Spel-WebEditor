@@ -1,5 +1,6 @@
 /* här skrivs style detta är css */
 header{grid-area: header;}
+nav{grid-area: nav;}
 main{grid-area: main;}
 footer{grid-area: footer;}
 
@@ -7,15 +8,46 @@ body{
     background-color:rgb(194, 209, 255);
 }
 
-.Grid-Container{
+.grid-container{
     display:  grid;
     grid-template-areas:
-    'header header header header'
+	'header header header header'
+	'nav nav nav nav'
     'main main main main'
-    'footer footer footer';
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    'footer footer footer footer';
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: auto auto minmax(200px, auto) auto;
     grid-gap: 10px;
 }
+/* navegation Menu */
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: rgb(127, 190, 197);
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: rgb(0, 0, 0);
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+li a:hover:not(.active) {
+	background-color: rgb(209, 144, 107);
+}
+
+.active {
+	background-color: rgb(52, 207, 86);
+}
+
 
 table, th, td {
 	border: 1px solid black;
@@ -35,4 +67,13 @@ table{
     width: 100px;
     height: 40px;
     float: right;
+}
+
+h1{
+	font-size: 1.7em;
+	margin: 10px;
+}
+
+.buttonFloat{
+	float: right;
 }

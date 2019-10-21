@@ -153,7 +153,7 @@ function updateFake3(storageNumb, inputID){
 }
 
 function updateImage(storageNumb, inputID){
-    this.inputValue = inputID.children[2].firstElementChild.value;
+    this.inputValue = inputID.children[5].firstElementChild.value;
     stor[storageNumb].imageName = this.inputValue;
 }
 

@@ -63,6 +63,23 @@ table{
 	background-color: rgb(233, 233, 233);
 }
 
+td > input[type="button"]{
+	width: 110px;
+}
+td > div{
+	display: inline-block;
+	width: 100%;
+}
+td > div >input[type="button"]{
+	width: 50%;
+	padding:0px 2px;
+}
+
+.tableContainer{
+	width: 100%;
+	overflow-x: scroll;
+}
+
 #addButton{
     width: 100px;
     height: 40px;

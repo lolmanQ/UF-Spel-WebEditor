@@ -67,7 +67,6 @@ function emptyTheTabel(){
 }
 
 function makeTabell(){
-    this.amountTabellRows = stor.length;
     stor.forEach(makeRow);
 }
 
@@ -135,8 +134,8 @@ function makeRow(value, i){
                 this.colomInputElement.setAttribute("onclick", "removeButtonClick("+sID+", "+this.elementID+");");
                 break;
 		}
-		stor[stor.length-1].tempNumb = sID;
-		sIDLookUpTable[sID] = stor.length-1;
+		stor[i].tempNumb = sID;
+		sIDLookUpTable[sID] = i;
         this.colomElement.appendChild(this.colomInputElement);
         this.rowElement.appendChild(this.colomElement);
     }
@@ -183,9 +182,9 @@ function removeButtonClick(sIDTemp, inputID){
 
 function MoveSIDLookupTable1(indexOfShift){
 	for(var i = 0; i< sIDLookUpTable.length;i++){
-		if(i>indexOfShift){
+		if(sIDLookUpTable[i] >= sIDLookUpTable[indexOfShift]){
 			sIDLookUpTable[i] = sIDLookUpTable[i] -1;
-		}
+		}	
 	}
 }
 

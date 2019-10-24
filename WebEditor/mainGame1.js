@@ -3,6 +3,8 @@ var file_text;
 var stor;
 var fullObjectStored;
 var rowID = 0;
+var sID = 0;
+var sIDLookUpTable = [];
 var fileNameString = "default";
 var fileNameFull;
 
@@ -71,66 +73,134 @@ function makeRow(value, i){
     this.table = document.getElementById("tb01");
     this.rowElement = document.createElement("tr");
     this.rowElement.id = this.elementID;
-    for(columsIndex = 1; columsIndex <= 4; columsIndex++){
+    for(columsIndex = 0; columsIndex <= 4; columsIndex++){
         this.colomElement = document.createElement("td");
         switch(columsIndex){
+			case 0:
+                this.colomInputElement = document.createElement("div");
+                this.inputButtonUp = document.createElement("input");
+                this.inputButtonDown = document.createElement("input");
+                this.inputButtonUp.type = "button";
+                this.inputButtonDown.type = "button";
+                this.inputButtonUp.value = "▲";
+                this.inputButtonDown.value = "▼";
+                this.inputButtonUp.setAttribute("onclick", "GoUpButton("+sID+", "+this.elementID+");");
+                this.inputButtonDown.setAttribute("onclick", "GoDownButton("+sID+", "+this.elementID+");");
+                this.colomInputElement.appendChild(this.inputButtonUp);
+                this.colomInputElement.appendChild(this.inputButtonDown);
+                break;
             case 1:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "text";
                 this.colomInputElement.value = value.quQuizText;
-                this.colomInputElement.setAttribute("onchange", "updateQuestion("+i+", "+this.elementID+");");
+                this.colomInputElement.setAttribute("onchange", "updateQuestion("+sID+", "+this.elementID+");");
                 break;
             case 2:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "text";
                 this.colomInputElement.value = value.anQuizText;
-                this.colomInputElement.setAttribute("onchange", "updateAnswer("+i+", "+this.elementID+");");
+                this.colomInputElement.setAttribute("onchange", "updateAnswer("+sID+", "+this.elementID+");");
                 break;
             case 3:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "text";
                 this.colomInputElement.value = value.imageName;
-                this.colomInputElement.setAttribute("onchange", "updateImage("+i+", "+this.elementID+");");
+                this.colomInputElement.setAttribute("onchange", "updateImage("+sID+", "+this.elementID+");");
                 break;
             case 4:
                 this.colomInputElement = document.createElement("input");
                 this.colomInputElement.type = "button";
                 this.colomInputElement.value = "Remove";
-                this.colomInputElement.setAttribute("onclick", "removeButtonClick("+i+", "+this.elementID+");");
+                this.colomInputElement.setAttribute("onclick", "removeButtonClick("+sID+", "+this.elementID+");");
                 break;
-        }
+		}
+		stor[i].tempNumb = sID;
+		sIDLookUpTable[sID] = i;
         this.colomElement.appendChild(this.colomInputElement);
         this.rowElement.appendChild(this.colomElement);
     }
     this.table.appendChild(this.rowElement);
-    rowID++;
+	rowID++;
+	sID++;
 }
 
-function updateQuestion(storageNumb, inputID){
+function updateQuestion(sIDTemp, inputID){
     this.inputValue = inputID.children[0].firstElementChild.value;
-    stor[storageNumb].quQuizText = this.inputValue;
+    stor[sIDLookUpTable[sIDTemp]].quQuizText = this.inputValue;
 }
 
-function updateAnswer(storageNumb, inputID){
+function updateAnswer(sIDTemp, inputID){
     this.inputValue = inputID.children[1].firstElementChild.value;
-    stor[storageNumb].anQuizText = this.inputValue;
+    stor[sIDLookUpTable[sIDTemp]].anQuizText = this.inputValue;
 }
 
-function updateImage(storageNumb, inputID){
+function updateImage(sIDTemp, inputID){
     this.inputValue = inputID.children[2].firstElementChild.value;
-    stor[storageNumb].imageName = this.inputValue;
+    stor[sIDLookUpTable[sIDTemp]].imageName = this.inputValue;
 }
 
-function removeButtonClick(storageNumb, inputID){
-    stor.splice(storageNumb,1);
-    inputID.remove();
+function removeButtonClick(sIDTemp, inputID){
+    stor.splice(sIDLookUpTable[sIDTemp],1);
+	MoveSIDLookupTable1(sIDTemp);
+	inputID.remove();
+}
+
+function MoveSIDLookupTable1(indexOfShift){
+	for(var i = 0; i< sIDLookUpTable.length;i++){
+		if(sIDLookUpTable[i] >= sIDLookUpTable[indexOfShift]){
+			sIDLookUpTable[i] = sIDLookUpTable[i] -1;
+		}	
+	}
+}
+
+function GoUpButton(sIDTemp, inputID){
+    if(sIDLookUpTable[sIDTemp] > 0){
+		this.wantToMove = inputID;
+    	this.wantToMoveVaribles = stor[sIDLookUpTable[sIDTemp]];
+		this.rowAboveVaribles = stor[sIDLookUpTable[sIDTemp]-1];
+		this.table = document.getElementById("tb01").children;
+		for(var i = 0; i < this.table.length;i++){
+			if(this.table[i] == this.wantToMove){
+				this.rowAbove = this.table[i-1];
+				this.tbody = document.getElementById("tb01");
+				this.tbody.insertBefore(inputID, this.rowAbove);
+				sIDLookUpTable[stor[i-1].tempNumb] = i;
+				sIDLookUpTable[stor[i].tempNumb] = i-1;
+				stor[i-1] = this.wantToMoveVaribles;
+				stor[i] = this.rowAboveVaribles;
+				break;
+			}
+		}
+    }
+}
+
+function GoDownButton(sIDTemp, inputID){
+	if(sIDLookUpTable[sIDTemp] < stor.length -1){
+		this.wantToMove = inputID;
+    	this.wantToMoveVaribles = stor[sIDLookUpTable[sIDTemp]];
+		this.rowAboveVaribles = stor[sIDLookUpTable[sIDTemp]+1];
+		this.table = document.getElementById("tb01").children;
+		for(var i = 0; i < this.table.length;i++){
+			if(this.table[i] == this.wantToMove){
+				this.rowAbove = this.table[i+2];
+				this.tbody = document.getElementById("tb01");
+				this.tbody.insertBefore(inputID, this.rowAbove);
+				sIDLookUpTable[stor[i+1].tempNumb] = i;
+				sIDLookUpTable[stor[i].tempNumb] = i+1;
+				stor[i+1] = this.wantToMoveVaribles;
+				stor[i] = this.rowAboveVaribles;
+				break;
+			}
+		}
+    }
 }
 
 function createEmptyRow(){
     this.emptyValue = {
         quQuizText: "",
         anQuizText: "",
-        imageName: ""
+		imageName: "",
+		tempNumb: 0
 	};
 	if(stor == null){
 		stor = [this.emptyValue];

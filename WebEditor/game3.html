@@ -3,22 +3,22 @@
 	<head>
 		<!--här är head-->
 		<meta charset="utf-8">
-    	<title>Web-editor game1</title>
+    	<title>Web-editor game 3</title>
 		<link href="style.css" rel="stylesheet">
-		<script type="text/javascript" src="mainGame1.js"></script>
+		<script type="text/javascript" src="mainGame3.js"></script>
 	</head>
 	<body>
 		<!--här är body-->
 		<div class="grid-container">
 			<header>
-				<h1>Question maker for Game 1</h1>
+				<h1>Question maker for Game 2</h1>
 			</header>
 			<nav>
 				<ul>
 					<li><a href="index.html">Home</a></li>
-					<li><a class="active">Game-1</a></li>
+					<li><a href="game1.html">Game-1</a></li>
 					<li><a href="game2.html">Game-2</a></li>
-					<li><a href="game3.html">Game-3</a></li>
+					<li><a class="active">Game-3</a></li>
 				</ul>
 			</nav>
 			<main>
@@ -29,20 +29,21 @@
 					<button onclick="loadSave()" class="buttonFloat">Load</button>
 					<button onclick="saveSave()" class="buttonFloat">Save</button>
 					<button onclick="makeEmpty()" class="buttonFloat">Reset</button>
-					<table id="t01">
-						<thead>
-							<tr>
-								<th>Position</th>
-								<th>Question</th>
-								<th>Answer</th>
-								<th>Image(optinal)</th>
-								<th>Remove Button</th>
-							</tr>
-						</thead>
-						<tbody id="tb01">
-
-						</tbody>
-					</table>
+					<div class="tableContainer">
+						<table id="t01">
+							<thead>
+								<tr>
+									<th>Position</th>
+									<th>Sign name</th>
+									<th>Sign image</th>
+									<th>Remove Button</th>
+								</tr>
+							</thead>
+							<tbody id="tb01">
+	
+							</tbody>
+						</table>
+					</div>
 					<button id="addButton" onclick="createEmptyRow()">Add new Question</button>
 				</section>
 			</main>

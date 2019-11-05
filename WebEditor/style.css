@@ -5,7 +5,7 @@ main{grid-area: main;}
 footer{grid-area: footer;}
 
 body{
-    background-color:rgb(194, 209, 255);
+	background-color:rgb(194, 209, 255);
 }
 
 .grid-container{
